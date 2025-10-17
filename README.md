@@ -1,21 +1,19 @@
 # product-catalog-complex
 
 ## Overview
-A modern, responsive single-page application that displays a product catalog with filtering capabilities and real-time statistics. The application parses product data from JSON and presents it in an elegant, user-friendly interface with Bootstrap cards.
+A modern, interactive single-page product catalog application that allows users to search and sort products in real-time. The application features a clean, responsive design with smooth animations and an intuitive user interface.
 
 ## Features
-- **Product Display**: Shows all products in a responsive grid layout with Bootstrap cards
-- **Product Information**: Each card displays product name, price (formatted with dollar sign), and category
-- **Category Filtering**: Dropdown filter to view products by category or all products
-- **Total Inventory Value**: Real-time calculation and display of total inventory value
-- **Statistics Dashboard**: Displays comprehensive catalog statistics including:
-  - Total number of products
-  - Number of categories
-  - Average price
-  - Highest and lowest prices
+- **Real-time Search**: Filter products by name with case-insensitive search as you type
+- **Multiple Sort Options**: Sort products by:
+  - Price: Low to High
+  - Price: High to Low
+  - Name: A-Z (alphabetical)
+- **Live Result Count**: Displays the number of products matching current filters
 - **Responsive Design**: Fully responsive layout that works on desktop, tablet, and mobile devices
-- **Modern UI**: Beautiful gradient backgrounds, smooth animations, and intuitive interface
-- **Icon Integration**: Font Awesome icons for enhanced visual appeal
+- **Modern UI**: Beautiful gradient backgrounds, smooth animations, and card-based layout
+- **Category Icons**: Visual icons representing different product categories
+- **No Results Handling**: User-friendly message when no products match the search criteria
 
 ## Setup Instructions
 1. Clone the repository
@@ -23,35 +21,47 @@ A modern, responsive single-page application that displays a product catalog wit
 3. The application runs entirely client-side
 
 ## Usage
-1. **Browse Products**: View all products displayed in card format on the main page
-2. **Filter by Category**: Use the dropdown menu to filter products by specific categories
-3. **View Total Value**: The total inventory value updates automatically based on filtered products
-4. **Check Statistics**: Scroll down to view comprehensive catalog statistics
+1. **Search Products**: Type in the search box to filter products by name. The results update instantly as you type.
+2. **Sort Products**: Use the dropdown menu to change the sort order. Choose from price-based or alphabetical sorting.
+3. **View Results**: The result count updates automatically to show how many products match your current search and sort criteria.
+4. **Browse Products**: Scroll through the product grid to view all matching items with their prices and categories.
 
 ## Code Explanation
-The application is built as a single-page application with embedded JavaScript:
 
-- **Data Management**: Product data from products.json is embedded directly in the JavaScript code
-- **Dynamic Rendering**: Products are dynamically rendered as Bootstrap cards using JavaScript template literals
-- **Filtering Logic**: Category filter updates the display in real-time without page reload
-- **Value Calculation**: Total inventory value is calculated using Array.reduce() method
-- **Statistics**: Real-time statistics are computed from the current filtered product set
-- **Error Handling**: Includes try-catch blocks and user-friendly error messages
-- **Security**: HTML escaping prevents XSS attacks
+### Data Management
+- Product data is embedded directly in the JavaScript as a JSON object
+- The application maintains two arrays: `allProducts` (original data) and `filteredProducts` (current view)
+
+### Search Functionality
+- The search input listens for `input` events
+- Filters products using case-insensitive string matching on product names
+- Updates the display in real-time
+
+### Sorting Logic
+- Three sort options implemented using JavaScript's `sort()` method
+- Price sorting uses numerical comparison
+- Name sorting uses `localeCompare()` for proper alphabetical ordering
+- Sorting is applied after filtering to maintain search results
+
+### Display Updates
+- The `updateDisplay()` function handles all UI updates
+- Uses document fragments for efficient DOM manipulation
+- Implements staggered animations for product cards
+- Shows "No Results" message when appropriate
+
+### Security
+- Implements HTML escaping to prevent XSS attacks
+- Uses `textContent` for user-generated content
 
 ## Technologies Used
-- **HTML5**: Semantic markup structure
-- **CSS3**: Custom styling with CSS Grid and Flexbox
-- **JavaScript (ES6+)**: Modern JavaScript for functionality
-- **Bootstrap 5.3.0**: Responsive framework and components
-- **Font Awesome 6.4.0**: Icon library for visual elements
-- **No external dependencies**: All code runs client-side without a server
+- **HTML5**: Semantic markup and structure
+- **CSS3**: Modern styling with flexbox, grid, gradients, and animations
+- **Bootstrap 5.3.0**: CSS framework for responsive design and utilities
+- **Bootstrap Icons 1.10.0**: Icon library for visual elements
+- **Vanilla JavaScript**: No frameworks, pure ES6+ JavaScript for functionality
 
 ## License
 MIT License
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR
+---
+✅ **Note:** This repository has been updated for **Round 2** of the evaluation cycle.
