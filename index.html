@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catalog</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --background-color: #ecf0f1;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header h1 i {
+            color: var(--secondary-color);
+        }
+
+        .controls {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        #category-filter {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        #category-filter:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .total-value-box {
+            background: linear-gradient(135deg, var(--success-color), #229954);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 250px;
+        }
+
+        .total-value-box label {
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0.9;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        #total-value {
+            font-size: 32px;
+            font-weight: 700;
+            display: block;
+        }
+
+        #product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            padding: 20px;
+            border: none;
+        }
+
+        .card-header h5 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .price-tag {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 15px 0;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 6px 15px;
+            background: var(--background-color);
+            color: var(--primary-color);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .product-icon {
+            font-size: 48px;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .stats-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            background: var(--background-color);
+            border-radius: 10px;
+        }
+
+        .stat-box .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .stat-box .stat-label {
+            font-size: 14px;
+            color: var(--primary-color);
+            margin-top: 5px;
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .no-products i {
+            font-size: 64px;
+            color: #bdc3c7;
+            margin-bottom: 20px;
+        }
+
+        .no-products p {
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 768px) {
+            #product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-section {
+                flex-direction: column;
+            }
+
+            .filter-group,
+            .total-value-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>
+                <i class="fas fa-store"></i>
+                Product Catalog
+            </h1>
+            <p class="text-muted mb-0">Browse our collection of quality products</p>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label for="category-filter">
+                        <i class="fas fa-filter"></i> Filter by Category
+                    </label>
+                    <select id="category-filter" class="form-select">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                <div class="total-value-box">
+                    <label>Total Inventory Value</label>
+                    <span id="total-value">$0.00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="product-grid"></div>
+
+        <!-- Statistics Section -->
+        <div class="stats-section">
+            <h3 class="mb-0">
+                <i class="fas fa-chart-bar"></i> Catalog Statistics
+            </h3>
+            <div class="stats-grid" id="stats-grid"></div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Embedded product data from products.json
+        const productsData = {
+            "products": [
+                {"price": 29.99, "category": "Electronics", "name": "Wireless Mouse", "id": 1},
+                {"price": 89.99, "category": "Electronics", "name": "Mechanical Keyboard", "id": 2},
+                {"price": 9.99, "category": "Accessories", "name": "USB Cable", "id": 3},
+                {"price": 39.99, "category": "Accessories", "name": "Laptop Stand", "id": 4},
+                {"price": 59.99, "category": "Electronics", "name": "Webcam", "id": 5}
+            ]
+        };
+
+        // Global variables
+        let allProducts = [];
+        let currentFilter = 'all';
+
+        // Icon mapping for different product types
+        const productIcons = {
+            'Wireless Mouse': 'fa-computer-mouse',
+            'Mechanical Keyboard': 'fa-keyboard',
+            'USB Cable': 'fa-cable-car',
+            'Laptop Stand': 'fa-laptop',
+            'Webcam': 'fa-video'
+        };
+
+        /**
+         * Initialize the application
+         */
+        function init() {
+            try {
+                allProducts = productsData.products;
+                populateCategoryFilter();
+                displayProducts(allProducts);
+                calculateTotalValue(allProducts);
+                displayStatistics(allProducts);
+                setupEventListeners();
+            } catch (error) {
+                console.error('Error initializing app:', error);
+                showError('Failed to load products. Please refresh the page.');
+            }
+        }
+
+        /**
+         * Populate the category filter dropdown with unique categories
+         */
+        function populateCategoryFilter() {
+            const categoryFilter = document.getElementById('category-filter');
+            const categories = [...new Set(allProducts.map(p => p.category))].sort();
+            
+            // Clear existing options except "All Categories"
+            categoryFilter.innerHTML = '<option value="all">All Categories</option>';
+            
+            // Add category options
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                categoryFilter.appendChild(option);
+            });
+        }
+
+        /**
+         * Display products in the grid
+         * @param {Array} products - Array of product objects to display
+         */
+        function displayProducts(products) {
+            const productGrid = document.getElementById('product-grid');
+            
+            if (products.length
